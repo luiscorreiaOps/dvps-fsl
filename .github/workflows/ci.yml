@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - name: setup node.js
@@ -19,7 +19,7 @@ jobs:
       - run: npm run lint --if-present
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: lint
     steps:
     - uses: actions/checkouts@v3
