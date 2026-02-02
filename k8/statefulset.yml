@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: fsl-challenge-app
+  namespace: production
+spec:
+  serviceName: fsl-challenge-service
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fsl-challenge-app
+  template:
+    metadata:
+      labels:
+        app: fsl-challenge-app
+    spec:
+      containers:
+      - name: app
+        image: fsl-challenge:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
