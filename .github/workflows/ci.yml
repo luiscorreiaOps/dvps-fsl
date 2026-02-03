@@ -2,7 +2,7 @@ name: CI fsl
 
 on:
   push:
-   branches:  [main, master]
+    branches: [main, master]
   pull_request:
     branches: [main, master]
 
@@ -10,22 +10,34 @@ jobs:
   lint:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-      - name: setup node.js
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '15'
-      - run: npm install
-      - run: npm run lint --if-present
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Run lint
+        run: npm run lint --if-present
 
   test:
     runs-on: ubuntu-22.04
     needs: lint
     steps:
-    - uses: actions/checkouts@v3
-    - name: setup node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '15'
-    - run: npm install
-    - run: npm run build --if-present
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '15'
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Build
+        run: npm run build --if-present
