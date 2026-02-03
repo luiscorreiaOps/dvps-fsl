@@ -11,11 +11,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-
       - uses: actions/setup-node@v3
         with:
           node-version: '15'
-
       - run: npm install
       - run: npm run lint
 
@@ -24,12 +22,8 @@ jobs:
     needs: lint
     steps:
       - uses: actions/checkout@v3
-
       - uses: actions/setup-node@v3
         with:
           node-version: '15'
-
       - run: npm install
-
-      - name: Run tests (fail on error)
-        run: CI=true npm test
+      - run: CI=true npm test
