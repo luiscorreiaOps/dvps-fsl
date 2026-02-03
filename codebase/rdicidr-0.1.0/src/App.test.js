@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 
-test("renders wrong text", () => {
+test("renders learn react link", () => {
   render(<App />);
-  const linkElement = screen.getByText(/NAO EXISTE ESSE TEXTO/i);
+  const linkElement = screen.getByText(/CIDR Calculator/i);
   expect(linkElement).toBeInTheDocument();
 });
