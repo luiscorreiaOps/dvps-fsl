@@ -9,51 +9,46 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./codebase/rdicidr-0.1.0
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node.js 15
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
-
-      - name: Change to project directory
-        run: cd codebase/rdicidr-0.1.0
+          node-version: '15.14.0'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          cd codebase/rdicidr-0.1.0
-          npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+        run: npm ci
 
       - name: Run lint
-        run: |
-          cd codebase/rdicidr-0.1.0
-          npm run lint --if-present
+        run: npm run lint --if-present
 
   test:
     runs-on: ubuntu-22.04
     needs: lint
+    defaults:
+      run:
+        working-directory: ./codebase/rdicidr-0.1.0
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node.js 15
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '15.14.0'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          cd codebase/rdicidr-0.1.0
-          npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+        run: npm ci
 
       - name: Build
-        run: |
-          cd codebase/rdicidr-0.1.0
-          npm run build --if-present
+        run: npm run build --if-present
 
       - name: Run tests
-        run: |
-          cd codebase/rdicidr-0.1.0
-          npx react-scripts test --watchAll=false --passWithNoTests
+        run: npm test -- --watchAll=false
